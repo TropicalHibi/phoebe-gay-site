@@ -344,6 +344,101 @@
             animation: fadeUp 0.6s 0.6s ease both;
         }
 
+        /* ── recent tracks ── */
+        .recent-tracks {
+            width: 100%;
+            margin-top: 28px;
+            animation: fadeUp 0.6s 0.65s ease both;
+        }
+
+        .recent-tracks-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            padding: 0 4px;
+        }
+
+        .recent-tracks-header span {
+            font-size: 0.72rem;
+            font-weight: 400;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .recent-tracks-header svg {
+            opacity: 0.5;
+        }
+
+        .recent-track {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 14px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text-dark);
+            transition: background 0.18s ease;
+        }
+
+        .recent-track:hover {
+            background: rgba(255,255,255,0.45);
+        }
+
+        .recent-track-art {
+            width: 34px;
+            height: 34px;
+            border-radius: 6px;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: linear-gradient(135deg, var(--lavender), var(--pink));
+        }
+
+        .recent-track-art-placeholder {
+            width: 34px;
+            height: 34px;
+            border-radius: 6px;
+            background: linear-gradient(135deg, var(--lavender), var(--pink));
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .recent-track-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            min-width: 0;
+            flex: 1;
+        }
+
+        .recent-track-title {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-dark);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .recent-track-artist {
+            font-size: 0.75rem;
+            color: var(--text-mid);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .recent-track-time {
+            font-size: 0.7rem;
+            color: var(--text-light);
+            flex-shrink: 0;
+            margin-left: auto;
+        }
+
         /* ── keyframes ── */
         @keyframes fadeDown {
             from { opacity: 0; transform: translateY(-16px); }
@@ -422,14 +517,17 @@
 
     </div>
 
+    <!-- Recent Tracks -->
+    <div class="recent-tracks" id="recent-tracks"></div>
+
     <p class="footer">phoebe.gay ✦ made with love</p>
 
 </div>
 
 <script>
     // ── Spotify now playing ──────────────────────────────────────────────────
-    // TODO: replace with your actual Vercel deployment URL after deploying
-    const API_URL = 'https://phoebe-spotify-api.vercel.app/api/now-playing';
+    const API_URL           = 'https://phoebe-spotify-api.vercel.app/api/now-playing';
+    const RECENT_TRACKS_URL = 'https://phoebe-spotify-api.vercel.app/api/recent-tracks';
 
     const spotifyIcon = `<svg class="now-playing-spotify" width="18" height="18" viewBox="0 0 24 24" fill="#1db954"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>`;
 
@@ -473,6 +571,52 @@
     fetchNowPlaying();
     // Refresh every 30 seconds
     setInterval(fetchNowPlaying, 30000);
+
+    // ── Last.fm recent tracks ────────────────────────────────────────────────
+    function timeAgo(ms) {
+        if (!ms) return '';
+        const mins = Math.floor((Date.now() - ms) / 60000);
+        if (mins < 1)   return 'just now';
+        if (mins < 60)  return `${mins}m ago`;
+        const hrs = Math.floor(mins / 60);
+        if (hrs < 24)   return `${hrs}h ago`;
+        return `${Math.floor(hrs / 24)}d ago`;
+    }
+
+    const lastfmIcon = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm-.5 14.5l-1.5-3.2-2 3.2H6l3-4.8-2.8-4.7h2l1.3 2.8 1.8-2.8h2l-2.8 4.5 3 5H11.5zm5.3 0h-1.7l-3.1-9.5h1.8l2.1 6.8 2.1-6.8H19l-3.2 9.5z" fill="var(--text-light)"/></svg>`;
+
+    async function fetchRecentTracks() {
+        const el = document.getElementById('recent-tracks');
+        try {
+            const res  = await fetch(RECENT_TRACKS_URL);
+            const data = await res.json();
+            if (!data.tracks?.length) { el.style.display = 'none'; return; }
+
+            el.innerHTML = `
+                <div class="recent-tracks-header">
+                    ${lastfmIcon}
+                    <span>recently scrobbled</span>
+                </div>
+                ${data.tracks.map(t => `
+                    <a class="recent-track" href="${t.url}" target="_blank" rel="noopener">
+                        ${t.albumArt
+                            ? `<img class="recent-track-art" src="${t.albumArt}" alt="${t.album}">`
+                            : `<div class="recent-track-art-placeholder">🎵</div>`}
+                        <div class="recent-track-info">
+                            <span class="recent-track-title">${t.title}</span>
+                            <span class="recent-track-artist">${t.artist}</span>
+                        </div>
+                        <span class="recent-track-time">${timeAgo(t.date)}</span>
+                    </a>
+                `).join('')}
+            `;
+        } catch {
+            el.style.display = 'none';
+        }
+    }
+
+    fetchRecentTracks();
+    setInterval(fetchRecentTracks, 30000);
 
     // ── twinkling stars ──────────────────────────────────────────────────────
     const starsEl = document.getElementById('stars');
