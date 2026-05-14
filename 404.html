@@ -41,42 +41,13 @@
       z-index: 0;
     }
     .wrap { position: relative; z-index: 1; width: 100%; max-width: 640px; }
-    .site-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 2.5rem;
-    }
-    .site-header a {
-      font-family: var(--sans);
-      font-weight: 800;
-      font-size: 1rem;
-      color: var(--accent);
-      text-decoration: none;
-      letter-spacing: 0.04em;
-    }
+    .site-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2.5rem; }
+    .site-header a { font-family: var(--sans); font-weight: 800; font-size: 1rem; color: var(--accent); text-decoration: none; letter-spacing: 0.04em; }
     .site-header a:hover { color: var(--text); }
-    .site-header span {
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      color: var(--muted);
-      letter-spacing: 0.12em;
-    }
-    .receipt {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      overflow: hidden;
-      animation: fadeUp 0.35s ease both;
-    }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(14px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    .receipt-stripe {
-      height: 3px;
-      background: linear-gradient(90deg, var(--accent-dim), var(--accent), var(--accent-dim));
-    }
+    .site-header span { font-family: var(--mono); font-size: 0.7rem; color: var(--muted); letter-spacing: 0.12em; }
+    .receipt { background: var(--surface); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; animation: fadeUp 0.35s ease both; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+    .receipt-stripe { height: 3px; background: linear-gradient(90deg, var(--accent-dim), var(--accent), var(--accent-dim)); }
     .receipt-head { padding: 1.6rem 1.8rem 1.2rem; border-bottom: 1px solid var(--border); }
     .receipt-head-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
     .receipt-id-label { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 0.25rem; }
@@ -84,7 +55,7 @@
     .receipt-meta { text-align: right; font-family: var(--mono); font-size: 0.7rem; color: var(--muted); line-height: 1.7; }
     .receipt-meta strong { color: var(--text); font-weight: 400; }
     .buyer-row { margin-top: 1rem; display: flex; align-items: center; gap: 0.5rem; }
-    .buyer-pill { display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(200,168,75,0.08); border: 1px solid var(--accent-dim); border-radius: 2px; padding: 0.25rem 0.65rem; font-family: var(--mono); font-size: 0.75rem; color: var(--accent); }
+    .buyer-pill { display: inline-flex; align-items: center; background: rgba(200,168,75,0.08); border: 1px solid var(--accent-dim); border-radius: 2px; padding: 0.25rem 0.65rem; font-family: var(--mono); font-size: 0.75rem; color: var(--accent); }
     .buyer-label { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
     .items-table { width: 100%; border-collapse: collapse; }
     .items-table thead tr { background: rgba(30,37,48,0.6); }
@@ -101,8 +72,8 @@
     .line-total { color: var(--accent); }
     .delta { display: inline-block; font-family: var(--mono); font-size: 0.6rem; padding: 0.1rem 0.35rem; border-radius: 2px; margin-left: 0.3rem; vertical-align: middle; }
     .delta.below { background: rgba(61,220,132,0.1); color: var(--green); }
-    .delta.above { background: rgba(224,92,92,0.1);  color: var(--red); }
-    .delta.at    { background: rgba(90,98,117,0.2);  color: var(--muted); }
+    .delta.above { background: rgba(224,92,92,0.1); color: var(--red); }
+    .delta.at    { background: rgba(90,98,117,0.2); color: var(--muted); }
     .receipt-foot { padding: 1rem 1.8rem 1.4rem; border-top: 1px solid var(--border); background: rgba(10,12,15,0.4); }
     .totals-row { display: flex; justify-content: space-between; align-items: center; }
     .totals-label { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
@@ -113,8 +84,8 @@
     .w3b-link a:hover { color: var(--accent); border-color: var(--accent-dim); }
     .state { padding: 4rem 1.8rem; text-align: center; font-family: var(--mono); }
     .state-icon { font-size: 2rem; margin-bottom: 0.75rem; opacity: 0.4; }
-    .state-msg  { font-size: 0.8rem; color: var(--muted); letter-spacing: 0.06em; }
-    .state-sub  { font-size: 0.7rem; color: var(--muted); margin-top: 0.5rem; opacity: 0.6; }
+    .state-msg { font-size: 0.8rem; color: var(--muted); letter-spacing: 0.06em; }
+    .state-sub { font-size: 0.7rem; color: var(--muted); margin-top: 0.5rem; opacity: 0.6; }
     .spinner { width: 28px; height: 28px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.7s linear infinite; margin: 0 auto 0.75rem; }
     @keyframes spin { to { transform: rotate(360deg); } }
   </style>
@@ -132,73 +103,59 @@
   </div>
 
   <script>
-    const USER_ID = 3997144;
-    const path    = window.location.pathname;
-    const match   = path.match(/^\/receipt\/([A-Za-z0-9_-]+)\/?$/);
+    const API_BASE = 'https://phoebe-spotify-api.vercel.app';
+    const path     = window.location.pathname;
+    const match    = path.match(/^\/receipt\/([A-Za-z0-9_-]+)\/?$/);
 
     if (match) {
-      document.title = 'Receipt ' + match[1] + ' · phoebe.gay';
-      document.getElementById('page-label').textContent = 'TORN · RECEIPT';
+      document.title = 'Receipt ' + match[1] + ' \u00b7 phoebe.gay';
+      document.getElementById('page-label').textContent = 'TORN \u00b7 RECEIPT';
       renderLoading();
       loadReceipt(match[1]);
     } else {
-      document.title = '404 · phoebe.gay';
+      document.title = '404 \u00b7 phoebe.gay';
       renderNotFound();
     }
 
     function renderLoading() {
-      document.getElementById('root').innerHTML =
-        '<div class="receipt"><div class="receipt-stripe"></div>' +
-        '<div class="state"><div class="spinner"></div>' +
-        '<div class="state-msg">fetching receipt\u2026</div></div></div>';
+      set('<div class="receipt"><div class="receipt-stripe"></div><div class="state"><div class="spinner"></div><div class="state-msg">fetching receipt\u2026</div></div></div>');
     }
 
     function renderError(msg) {
-      document.getElementById('root').innerHTML =
-        '<div class="receipt"><div class="receipt-stripe"></div>' +
-        '<div class="state"><div class="state-icon">\u2715</div>' +
-        '<div class="state-msg">' + esc(msg) + '</div></div></div>';
+      set('<div class="receipt"><div class="receipt-stripe"></div><div class="state"><div class="state-icon">\u2715</div><div class="state-msg">' + esc(msg) + '</div></div></div>');
     }
 
     function renderNotFound() {
-      document.getElementById('root').innerHTML =
-        '<div class="receipt"><div class="receipt-stripe"></div>' +
-        '<div class="state"><div class="state-icon">404</div>' +
-        '<div class="state-msg">page not found</div>' +
-        '<div class="state-sub"><a href="/" style="color:inherit">\u2190 go home</a></div>' +
-        '</div></div>';
+      set('<div class="receipt"><div class="receipt-stripe"></div><div class="state"><div class="state-icon">404</div><div class="state-msg">page not found</div><div class="state-sub"><a href="/" style="color:inherit">\u2190 go home</a></div></div></div>');
     }
 
     function renderReceipt(data, id) {
       var rows = (data.items || []).map(function(item) {
         return '<tr>' +
-          '<td><div class="item-name">' + esc(item.item_name || '\u2014') + '</div>' +
-          '<div class="item-id">#' + item.item_id + '</div></td>' +
+          '<td><div class="item-name">' + esc(item.item_name || '\u2014') + '</div><div class="item-id">#' + item.item_id + '</div></td>' +
           '<td class="num qty">' + item.quantity + '\u00d7</td>' +
           '<td class="num">' + fmt(item.price_used) + deltaBadge(item.price_used, item.market_price_at_time) + '</td>' +
           '<td class="num line-total">' + fmt(item.total_value) + '</td>' +
           '</tr>';
       }).join('');
 
-      var itemCount = data.item_count != null ? data.item_count : (data.items ? data.items.length : 0);
+      var count = data.item_count != null ? data.item_count : (data.items ? data.items.length : 0);
 
-      document.getElementById('root').innerHTML =
-        '<div class="receipt"><div class="receipt-stripe"></div>' +
+      set('<div class="receipt"><div class="receipt-stripe"></div>' +
         '<div class="receipt-head"><div class="receipt-head-row">' +
         '<div><div class="receipt-id-label">Receipt ID</div><div class="receipt-id">' + esc(id) + '</div></div>' +
         '<div class="receipt-meta"><div><strong>' + dateStr(data.created_at) + '</strong></div>' +
-        (data.trade_id ? '<div>Trade #' + esc(String(data.trade_id)) + '</div>' : '') +
-        '</div></div>' +
+        (data.trade_id ? '<div>Trade #' + esc(String(data.trade_id)) + '</div>' : '') + '</div>' +
+        '</div>' +
         (data.buyer_name ? '<div class="buyer-row"><span class="buyer-label">Buyer</span><span class="buyer-pill">' + esc(data.buyer_name) + '</span></div>' : '') +
         '</div>' +
         '<table class="items-table"><thead><tr>' +
         '<th>Item</th><th class="num">Qty</th><th class="num">Unit Price</th><th class="num">Subtotal</th>' +
         '</tr></thead><tbody>' + rows + '</tbody></table>' +
         '<div class="receipt-foot"><div class="totals-row">' +
-        '<div><div class="totals-label">Total</div>' +
-        '<div class="item-count">' + itemCount + ' item type' + (itemCount !== 1 ? 's' : '') + '</div></div>' +
+        '<div><div class="totals-label">Total</div><div class="item-count">' + count + ' item type' + (count !== 1 ? 's' : '') + '</div></div>' +
         '<div class="totals-value">' + fmt(data.total_value) + '</div>' +
-        '</div></div></div>';
+        '</div></div></div>');
 
       document.getElementById('w3b-href').href = 'https://weav3r.dev/receipt/' + id;
       document.getElementById('w3b-link').style.display = 'block';
@@ -206,23 +163,21 @@
 
     async function loadReceipt(id) {
       try {
-        var res = await fetch('https://weav3r.dev/api/trades/' + USER_ID + '/' + encodeURIComponent(id));
-        if (res.status === 404) { renderError('Receipt not found.'); return; }
-        if (!res.ok)            { renderError('W3B returned ' + res.status + '.'); return; }
+        var res = await fetch(API_BASE + '/api/receipt?id=' + encodeURIComponent(id));
+        if (!res.ok) { renderError('Failed to load receipt (HTTP ' + res.status + ').'); return; }
         renderReceipt(await res.json(), id);
       } catch(e) {
         renderError('Failed to load receipt. Check your connection.');
       }
     }
 
-    function fmt(n) {
-      return '$' + Number(n).toLocaleString('en-US');
-    }
+    function set(html) { document.getElementById('root').innerHTML = html; }
+
+    function fmt(n) { return '$' + Number(n).toLocaleString('en-US'); }
 
     function dateStr(epoch) {
       return new Date(epoch * 1000).toLocaleString('en-GB', {
-        day: '2-digit', month: 'short', year: 'numeric',
-        hour: '2-digit', minute: '2-digit'
+        day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
       });
     }
 
@@ -235,9 +190,7 @@
     }
 
     function esc(str) {
-      return String(str)
-        .replace(/&/g, '&amp;').replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
   </script>
 </body>
