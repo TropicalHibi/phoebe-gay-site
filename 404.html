@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>phoebe.gay</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@400;600;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     :root {
       --bg:        #0a0c0f;
@@ -18,7 +18,7 @@
       --text:      #dde3ed;
       --muted:     #5a6275;
       --mono:      'Share Tech Mono', monospace;
-      --sans:      'Syne', sans-serif;
+      --sans:      'DM Sans', sans-serif;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -130,11 +130,11 @@
     }
 
     function renderReceipt(data, id) {
-      var rows = (data.items || []).map(function(item) {
+      var rows = (data.items || []).slice().sort(function(a,b){return b.total_value-a.total_value;}).map(function(item) {
         return '<tr>' +
           '<td><div class="item-name">' + esc(item.item_name || '\u2014') + '</div><div class="item-id">#' + item.item_id + '</div></td>' +
           '<td class="num qty">' + item.quantity + '\u00d7</td>' +
-          '<td class="num">' + fmt(item.price_used) + deltaBadge(item.price_used, item.market_price_at_time) + '</td>' +
+          '<td class="num">' + fmt(item.price_used) + '</td>' +
           '<td class="num line-total">' + fmt(item.total_value) + '</td>' +
           '</tr>';
       }).join('');
